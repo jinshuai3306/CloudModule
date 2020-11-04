@@ -1,0 +1,26 @@
+server:
+  port: 8099
+spring:
+  application:
+    name: OfferGateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+    gateway:
+      routes:
+      - id: customerapi
+        uri: lb://CustomerApi
+        predicates:
+        - Path=/like/**
+        filters:
+        - StripPrefix=1    #表示路由时会去除的路径级别
+
+
+      - id: modulelikeprovider
+        uri: lb://ModuleProvider
+        predicates:
+        - Path=/user/**
+        filters:
+        - StripPrefix=1    #表示路由时会去除的路径级别

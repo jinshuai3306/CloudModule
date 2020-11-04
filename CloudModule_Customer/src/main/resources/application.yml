@@ -1,0 +1,14 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: CustomerApi
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
+
