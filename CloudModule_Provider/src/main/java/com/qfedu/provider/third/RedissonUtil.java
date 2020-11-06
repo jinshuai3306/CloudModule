@@ -48,7 +48,9 @@ public class RedissonUtil {
     public static Set<Object> getSet(String key){
         return client.getSet(key).readAll();
     }
-
+    public static Object getStrObj(String key){
+        return client.getBucket(key).get();
+    }
 
     //-------------------------------Set---------------------------------------------
     //set添加--string,string
@@ -86,9 +88,20 @@ public class RedissonUtil {
         return client.getScoredSortedSet(key).contains(val);
     }
     //String校验
-    public static boolean checkKey(String key){
+    public static boolean checkKey(String... key){
         return client.getKeys().countExists(key)>0;
     }
+
+    /**
+     * 模糊查询key
+     * @param key
+     * @return
+     */
+    public static boolean checkKeyPat(String key){
+        return client.getKeys().getKeysByPattern(key)!=null;
+    }
+
+
     //设置有效期  key/时间/时间单位
     public static void setTime(String key,long time,TimeUnit timeUnit){
         client.getKeys().expire(key, time, timeUnit);
